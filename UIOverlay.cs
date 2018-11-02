@@ -11,13 +11,19 @@ namespace SubnauticaMiniMap
     {
         protected override void OnPopulateMesh(VertexHelper vh)
         {
+            if(!logged)
+            {
+                logged = true;
+                MainPatcher.sw.WriteLine("OnPopulateMesh");
+                MainPatcher.sw.Flush();
+            }
             Vector2 corner1 = Vector2.zero;
             Vector2 corner2 = Vector2.zero;
 
-            corner1.x = 0f;
-            corner1.y = 0f;
-            corner2.x = 1f;
-            corner2.y = 1f;
+            corner1.x = 0.75f;
+            corner1.y = 0.75f;
+            corner2.x = 0.9f;
+            corner2.y = 0.9f;
 
             corner1.x -= rectTransform.pivot.x;
             corner1.y -= rectTransform.pivot.y;
@@ -52,5 +58,7 @@ namespace SubnauticaMiniMap
             vh.AddTriangle(0, 1, 2);
             vh.AddTriangle(2, 3, 0);
         }
+
+        private bool logged = false;
     }
 }
