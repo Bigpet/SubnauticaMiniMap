@@ -20,10 +20,10 @@ namespace SubnauticaMiniMap
             Vector2 corner1 = Vector2.zero;
             Vector2 corner2 = Vector2.zero;
 
-            corner1.x = 0.75f;
-            corner1.y = 0.75f;
-            corner2.x = 0.9f;
-            corner2.y = 0.9f;
+            corner1.x = 0.0f;
+            corner1.y = 0.0f;
+            corner2.x = 1.0f;
+            corner2.y = 1.0f;
 
             corner1.x -= rectTransform.pivot.x;
             corner1.y -= rectTransform.pivot.y;

@@ -58,4 +58,8 @@
     <Compile Include="UIOverlay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" H:\SteamLibrary\steamapps\common\Subnautica\QMods\MiniMapTest
+copy "$(TargetDir)\$(TargetName).pdb" H:\SteamLibrary\steamapps\common\Subnautica\QMods\MiniMapTest</PostBuildEvent>
+  </PropertyGroup>
 </Project>
