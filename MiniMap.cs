@@ -53,6 +53,73 @@ namespace SubnauticaMiniMap
         {
             try
             {
+                if (Input.GetKeyDown("g"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        this.inctest *= 10.0f;
+                        rto5.localPosition += (new Vector3(1.0f, 1.0f, 0.0f) * inctest);
+                    }
+                }
+                if (Input.GetKeyDown("h"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        rto5.localPosition -= (new Vector3(1.0f, 0.0f, 0.0f) * inctest);
+                    }
+                }
+                if (Input.GetKeyDown("j"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        rto5.localPosition += (new Vector3(1.0f, 0.0f, 0.0f) * inctest);
+                    }
+                }
+                if (Input.GetKeyDown("n"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        rto5.localPosition -= (new Vector3(0.0f, 1.0f, 0.0f) * inctest);
+                    }
+                }
+                if (Input.GetKeyDown("m"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        rto5.localPosition += (new Vector3(0.0f, 1.0f, 0.0f) * inctest);
+                    }
+                }
+                if (Input.GetKeyDown("k"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        this.inctest *= (1/10.0f);
+                        rto5.localPosition += (new Vector3(1.0f, 1.0f, 0.0f) * inctest);
+                    }
+                }
+                if (Input.GetKeyDown("u"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        rto5.localScale *= 2.0f;
+                    }
+                }
+                if (Input.GetKeyDown("i"))
+                {
+                    if (instMinimap)
+                    {
+                        var rto5 = instMinimap.GetComponent<RectTransform>();
+                        rto5.localScale /= 2.0f;
+                    }
+                }
+
                 printOnce("update called");
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -169,7 +236,7 @@ namespace SubnauticaMiniMap
                                 rto3.SetParent(canvTrans);
                                 rto3.position += new Vector3(0, 0, 0.1f);
                                 printOnce("c11");
-                                rto3.localScale = new Vector3(0.05f, 0.05f, 1.0f);
+                                rto3.localScale = new Vector3(0.001f, 0.001f, 1.0f);
                                 GameObject obj4 = new GameObject("SubnauticaMiniMap.Overlay4");
                                 var img4 = obj4.AddComponent<UnityEngine.UI.RawImage>();
                                 img4.color = new Color(0.0f, 1.0f, 1.0f);
@@ -181,7 +248,7 @@ namespace SubnauticaMiniMap
                                     var rto5 = instMinimap.GetComponent<RectTransform>();
                                     rto5.SetParent(canvTrans);
                                     rto5.position += new Vector3(0, 0, 0.1f);
-                                    rto5.localScale *= .01f;
+                                    rto5.localScale *= .0001f;
                                 }
                                 rto4.SetParent(canvTrans);
                                 rto4.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -246,6 +313,7 @@ namespace SubnauticaMiniMap
         public GameObject prefabMinimap;
         public GameObject instMinimap;
 
+        public float inctest = 0.001f;
         public static MiniMap Instance { get; private set; }
     }
 }
