@@ -49,6 +49,7 @@ namespace SubnauticaMiniMap
             MiniMap.Instance = this;
         }
 
+
         public void Update()
         {
             try
@@ -119,8 +120,53 @@ namespace SubnauticaMiniMap
                         rto5.localScale /= 2.0f;
                     }
                 }
+                if (Input.GetKeyDown("b"))
+                {
+                    this.rotateMap = !this.rotateMap;
+                }
+                if (Input.GetKeyDown("c"))
+                {
+                    this.flipX = !this.flipX;
+                }
+                if (Input.GetKeyDown("v"))
+                {
+                    this.flipY = !this.flipY;
+                }
 
-                printOnce("update called");
+                if (prefabMinimap != null)
+                {
+                    var mapimg = GameObject.Find("MapImage");
+                    if(mapimg)
+                    {
+                        var transf = mapimg.GetComponent<RectTransform>();
+                        var angles = Player.main.transform.rotation.eulerAngles;
+                        //transf.rotation.SetAxisAngle(new Vector3(0.0f,0.0f,1.0f), angles.magnitude);
+                        //-Player.main.camRoot.transform.rotation.eulerAngles.y
+
+                        ////transf.rotation = Quaternion.AngleAxis(-Player.main.camRoot.transform.rotation.eulerAngles.y + ((int)rotated)* variableRot), new Vector3(0.0f, 0.0f, 1.0f));
+                        //transf.localRotation = Quaternion.AngleAxis(-Player.main.camRoot.transform.rotation.eulerAngles.y + variableRot, new Vector3(0.0f, 0.0f, 1.0f));
+                        //transf.localPosition.Scale(new Vector3(0.0f, 0.0f, 1.0f));
+                        //transf.localPosition += new Vector3(
+                        //    Player.main.transform.position.x * 1.0f / mapScale, 
+                        //    Player.main.transform.position.y * 1.0f / mapScale, 
+                        //    0.0f);
+                        ////transf.localPosition.y = Player.main.transform.position.y * 1.0f / mapScale;
+                        ///
+                        transf.rotation = Quaternion.identity;
+                        transf.position = Vector3.zero;
+                        transf.localRotation = Quaternion.identity;
+                        transf.localPosition = Vector3.zero;
+                        if (this.rotateMap)
+                        { transf.Rotate(0.0f, 0.0f, -Player.main.camRoot.transform.rotation.eulerAngles.y); }
+
+                        transf.Translate(
+                            Player.main.transform.position.x * (flipX ? -1.0f : 1.0f) / mapScale,
+                            Player.main.transform.position.z * (flipY ? -1.0f : 1.0f) / mapScale,
+                            0.0f
+                            );
+                    }
+                }
+                    printOnce("update called");
                 if (Input.GetMouseButtonDown(1))
                 {
                     printOnce("right mouse down");
@@ -247,8 +293,8 @@ namespace SubnauticaMiniMap
                                     printOnce("inst2 minimap loaded");
                                     var rto5 = instMinimap.GetComponent<RectTransform>();
                                     rto5.SetParent(canvTrans);
-                                    rto5.position += new Vector3(0, 0, 0.1f);
                                     rto5.localScale *= .0001f;
+                                    rto5.position += new Vector3(0.03f, 0.03f, 0.1f);
                                 }
                                 rto4.SetParent(canvTrans);
                                 rto4.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -315,5 +361,12 @@ namespace SubnauticaMiniMap
 
         public float inctest = 0.001f;
         public static MiniMap Instance { get; private set; }
+
+        public bool rotated = false;
+        public bool rotateMap = false;
+        public bool flipX = false;
+        public bool flipY = false;
+        public float variableRot = 0.01f;
+        public float mapScale = 40000.0f;
     }
 }
