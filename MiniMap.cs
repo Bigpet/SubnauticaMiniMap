@@ -100,7 +100,7 @@ namespace SubnauticaMiniMap
                     if (instMinimap)
                     {
                         var rto5 = instMinimap.GetComponent<RectTransform>();
-                        this.inctest *= (1/10.0f);
+                        this.inctest *= (1 / 10.0f);
                         rto5.localPosition += (new Vector3(1.0f, 1.0f, 0.0f) * inctest);
                     }
                 }
@@ -110,6 +110,7 @@ namespace SubnauticaMiniMap
                     {
                         var rto5 = instMinimap.GetComponent<RectTransform>();
                         rto5.localScale *= 2.0f;
+                        mapScale /= 2.0f;
                     }
                 }
                 if (Input.GetKeyDown("i"))
@@ -118,6 +119,7 @@ namespace SubnauticaMiniMap
                     {
                         var rto5 = instMinimap.GetComponent<RectTransform>();
                         rto5.localScale /= 2.0f;
+                        mapScale *= 2.0f;
                     }
                 }
                 if (Input.GetKeyDown("b"))
@@ -132,13 +134,35 @@ namespace SubnauticaMiniMap
                 {
                     this.flipY = !this.flipY;
                 }
+                if (Input.GetKeyDown("x"))
+                {
+                    this.flipS = !this.flipS;
+                }
+                if (Input.GetKeyDown("y"))
+                {
+                    this.flipT = !this.flipT;
+                }
+                if (Input.GetKeyDown("p"))
+                {
+                    this.flipR = !this.flipR;
+                }
 
                 if (prefabMinimap != null)
                 {
                     var mapimg = GameObject.Find("MapImage");
-                    if(mapimg)
+                    var playerIcon = GameObject.Find("PlayerIcon");
+                    if (mapimg)
                     {
                         var transf = mapimg.GetComponent<RectTransform>();
+                        RectTransform transf2;
+                        if (playerIcon)
+                        {
+                            transf2 = playerIcon.GetComponent<RectTransform>();
+                        }
+                        else
+                        {
+                            transf2 = new RectTransform();
+                        }
                         var angles = Player.main.transform.rotation.eulerAngles;
                         //transf.rotation.SetAxisAngle(new Vector3(0.0f,0.0f,1.0f), angles.magnitude);
                         //-Player.main.camRoot.transform.rotation.eulerAngles.y
@@ -156,52 +180,68 @@ namespace SubnauticaMiniMap
                         transf.position = Vector3.zero;
                         transf.localRotation = Quaternion.identity;
                         transf.localPosition = Vector3.zero;
-                        if (this.rotateMap)
-                        { transf.Rotate(0.0f, 0.0f, -Player.main.camRoot.transform.rotation.eulerAngles.y); }
+                        transf.localScale = Vector3.one;
+                        transf2.rotation = Quaternion.identity;
+                        transf2.position = Vector3.zero;
+                        transf2.localRotation = Quaternion.identity;
+                        transf2.localPosition = Vector3.zero;
+                        transf2.localScale = Vector3.one;
 
+                        if (this.rotateMap)
+                        {
+                            transf.Rotate(0.0f, 0.0f, (flipR ? 1.0f : -1.0f) * Player.main.camRoot.transform.rotation.eulerAngles.y);
+                        }
+                        else
+                        {
+                            transf2.Rotate(0.0f, 0.0f, (flipR ? -1.0f : 1.0f) * Player.main.camRoot.transform.rotation.eulerAngles.y);
+                        }
                         transf.Translate(
-                            Player.main.transform.position.x * (flipX ? -1.0f : 1.0f) / mapScale,
-                            Player.main.transform.position.z * (flipY ? -1.0f : 1.0f) / mapScale,
-                            0.0f
-                            );
+                                Player.main.transform.position.x * (flipX ? -1.0f : 1.0f) / mapScale,
+                                Player.main.transform.position.z * (flipY ? -1.0f : 1.0f) / mapScale,
+                                0.0f
+                                );
+                        transf.localScale = new Vector3((flipS ? -1.0f : 1.0f), (flipT ? -1.0f : 1.0f), 1.0f);
                     }
                 }
-                    printOnce("update called");
+                printOnce("update called");
                 if (Input.GetMouseButtonDown(1))
                 {
                     printOnce("right mouse down");
-                    if (!initialized && assets != null)
+                    if (!initialized)
                     {
-                        printOnce("check assets");
-                        if (prefabMinimap == null)
+                        if (assets != null)
                         {
-                            prefabMinimap = assets.LoadAsset<GameObject>("MiniMapOverlay");
+                            printOnce("check assets");
                             if (prefabMinimap == null)
                             {
-                                printOnce("prefab not loaded");
-                            }
-                            else
-                            {
-                                printOnce("prefab loaded");
-                                instMinimap = UnityEngine.Object.Instantiate<GameObject>(this.prefabMinimap);
-                                if (instMinimap == null)
+                                prefabMinimap = assets.LoadAsset<GameObject>("MiniMapOverlay2");
+                                if (prefabMinimap == null)
                                 {
-                                    printOnce("inst minimap not loaded");
+                                    printOnce("prefab not loaded");
                                 }
                                 else
                                 {
-                                    printOnce("inst minimap loaded");
+                                    printOnce("prefab loaded");
+                                    instMinimap = UnityEngine.Object.Instantiate<GameObject>(this.prefabMinimap);
+                                    if (instMinimap == null)
+                                    {
+                                        printOnce("inst minimap not loaded");
+                                    }
+                                    else
+                                    {
+                                        printOnce("inst minimap loaded");
+                                    }
                                 }
+                            }
+                            else
+                            {
+                                printOnce("prefabMinimap wasn not null");
                             }
                         }
                         else
                         {
-                            printOnce("prefabMinimap wasn not null");
+                            printOnce("assets were null");
                         }
-                    }
-                    else
-                    {
-                        printOnce("assets were null");
                     }
                     if (!initialized)
                     {
@@ -294,7 +334,7 @@ namespace SubnauticaMiniMap
                                     var rto5 = instMinimap.GetComponent<RectTransform>();
                                     rto5.SetParent(canvTrans);
                                     rto5.localScale *= .0001f;
-                                    rto5.position += new Vector3(0.03f, 0.03f, 0.1f);
+                                    rto5.position += new Vector3(0.05f, -0.035f, 0.1f);
                                 }
                                 rto4.SetParent(canvTrans);
                                 rto4.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -364,9 +404,12 @@ namespace SubnauticaMiniMap
 
         public bool rotated = false;
         public bool rotateMap = false;
-        public bool flipX = false;
-        public bool flipY = false;
+        public bool flipX = true;
+        public bool flipY = true;
+        public bool flipS = false;
+        public bool flipT = false;
+        public bool flipR = true;
         public float variableRot = 0.01f;
-        public float mapScale = 40000.0f;
+        public float mapScale = 20000.0f;
     }
 }
