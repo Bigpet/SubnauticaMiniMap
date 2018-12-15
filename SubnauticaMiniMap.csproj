@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="MiniMap.cs" />
     <Compile Include="MainPatcher.cs" />
+    <Compile Include="ModOption.cs" />
+    <Compile Include="OptionsPatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIOverlay.cs" />
   </ItemGroup>

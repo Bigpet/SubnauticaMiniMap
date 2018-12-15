@@ -6,6 +6,7 @@ using System.Reflection;
 using Harmony;
 using UnityEngine.SceneManagement;
 using System.IO;
+using UnityEngine;
 
 namespace SubnauticaMiniMap
 {
@@ -19,6 +20,38 @@ namespace SubnauticaMiniMap
             f = System.IO.File.Open(@"H:\SteamLibrary\steamapps\common\Subnautica\QMods\SubnauticaMap\Bars_dmp\modtest.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
             sw = new StreamWriter(f);
             sw.WriteLine("ModStart");
+            //Debug.Log("MiniMapMod patcher start");
+            sw.WriteLine("ModOptions");
+            try
+            {
+                var options = new ModOptions();
+                sw.WriteLine("ModOptions2");
+                options.Name = "Mini Map Options";
+                var slider = new ModSliderOption("sldtest", "Slider Option", 20, 100, 50);
+                sw.WriteLine("ModOptions3");
+                var checkbox = new ModToggleOption("tgltest", "Toggle Opt", false);
+                sw.WriteLine("ModOptions4");
+                var choice = new ModChoiceOption("choicetest", "Choice", new[] { "a option", "b option" }, 0);
+                sw.WriteLine("ModOptions5");
+
+                options.Options.Add(slider);
+                sw.WriteLine("ModOptions6");
+
+                options.Options.Add(checkbox);
+                sw.WriteLine("ModOptions7");
+                options.Options.Add(choice);
+                sw.WriteLine("ModOptions8");
+                OptionsPatcher.modOptions.Add(options);
+                sw.WriteLine("ModOptions9");
+                OptionsPatcher.Patch(harmony);
+                sw.WriteLine("ModOptions10");
+
+            }
+            catch (Exception e)
+            {
+                sw.WriteLine(e.StackTrace);
+            }
+            sw.WriteLine("OptionsPatched");
             sw.Flush();
         }
 
