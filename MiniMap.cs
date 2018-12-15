@@ -31,7 +31,10 @@ namespace SubnauticaMiniMap
             {
                 printOnce(e.Message);
             }
-            inst.assets = AssetBundle.LoadFromFile(@"H:\DEV\2018\UnitySubntest\SubnauticaModdingTest\Assets\AssetBundles\subnauticaminimap");
+            string minimapassetfile = string.Format("{0}\\QMods\\MiniMap\\subnauticaminimap", Environment.CurrentDirectory);
+            printOnce(minimapassetfile);
+            inst.assets = AssetBundle.LoadFromFile(minimapassetfile);
+            //inst.assets = AssetBundle.LoadFromFile(@"H:\DEV\2018\UnitySubntest\SubnauticaModdingTest\Assets\AssetBundles\subnauticaminimap");
             if (inst.assets == null)
             {
                 printOnce("Failed to load assets");
@@ -204,46 +207,11 @@ namespace SubnauticaMiniMap
                     }
                 }
                 printOnce("update called");
-                if (Input.GetMouseButtonDown(1))
+                //if (Input.GetMouseButtonDown(1))
                 {
-                    printOnce("right mouse down");
-                    if (!initialized)
-                    {
-                        if (assets != null)
-                        {
-                            printOnce("check assets");
-                            if (prefabMinimap == null)
-                            {
-                                prefabMinimap = assets.LoadAsset<GameObject>("MiniMapOverlay2");
-                                if (prefabMinimap == null)
-                                {
-                                    printOnce("prefab not loaded");
-                                }
-                                else
-                                {
-                                    printOnce("prefab loaded");
-                                    instMinimap = UnityEngine.Object.Instantiate<GameObject>(this.prefabMinimap);
-                                    if (instMinimap == null)
-                                    {
-                                        printOnce("inst minimap not loaded");
-                                    }
-                                    else
-                                    {
-                                        printOnce("inst minimap loaded");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                printOnce("prefabMinimap wasn not null");
-                            }
-                        }
-                        else
-                        {
-                            printOnce("assets were null");
-                        }
-                    }
-                    if (!initialized)
+                    printOnce("left mouse down");
+
+                    if (!initialized && asset_loaded)
                     {
                         var mainGUI = uGUI.main;
                         if (mainGUI == null) return;
@@ -365,6 +333,44 @@ namespace SubnauticaMiniMap
                             printOnce("overlay was null");
                         }
                     }
+
+                    if (!asset_loaded)
+                    {
+                        if (assets != null)
+                        {
+                            printOnce("check assets");
+                            if (prefabMinimap == null)
+                            {
+                                prefabMinimap = assets.LoadAsset<GameObject>("MiniMapOverlay2");
+                                if (prefabMinimap == null)
+                                {
+                                    printOnce("prefab not loaded");
+                                }
+                                else
+                                {
+                                    printOnce("prefab loaded");
+                                    instMinimap = UnityEngine.Object.Instantiate<GameObject>(this.prefabMinimap);
+                                    if (instMinimap == null)
+                                    {
+                                        printOnce("inst minimap not loaded");
+                                    }
+                                    else
+                                    {
+                                        printOnce("inst minimap loaded");
+                                        asset_loaded = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                printOnce("prefabMinimap wasn not null");
+                            }
+                        }
+                        else
+                        {
+                            printOnce("assets were null");
+                        }
+                    }
                 }
 
             }
@@ -390,6 +396,7 @@ namespace SubnauticaMiniMap
         public static HashSet<string> printed = new HashSet<string>();
 
         private bool initialized = false;
+        private bool asset_loaded = false;
         private Graphic g;
 
         private static List<UnityEngine.Object> objs = new List<UnityEngine.Object>();

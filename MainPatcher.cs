@@ -17,7 +17,8 @@ namespace SubnauticaMiniMap
             var harmony = HarmonyInstance.Create("de.petertissen.subnautica.minimap.mod");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             SceneManager.sceneLoaded += MainPatcher.OnSceneLoaded;
-            f = System.IO.File.Open(@"H:\SteamLibrary\steamapps\common\Subnautica\QMods\SubnauticaMap\Bars_dmp\modtest.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            f = System.IO.File.Open(string.Format("{0}\\QMods\\MiniMap\\modtest.txt", Environment.CurrentDirectory), FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            //f = System.IO.File.Open(@"H:\SteamLibrary\steamapps\common\Subnautica\QMods\SubnauticaMap\Bars_dmp\modtest.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
             sw = new StreamWriter(f);
             sw.WriteLine("ModStart");
             //Debug.Log("MiniMapMod patcher start");

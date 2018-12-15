@@ -61,7 +61,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" H:\SteamLibrary\steamapps\common\Subnautica\QMods\MiniMapTest
-copy "$(TargetDir)\$(TargetName).pdb" H:\SteamLibrary\steamapps\common\Subnautica\QMods\MiniMapTest</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" H:\SteamLibrary\steamapps\common\Subnautica\QMods\MiniMap
+copy "$(TargetDir)\$(TargetName).pdb" H:\SteamLibrary\steamapps\common\Subnautica\QMods\MiniMap
+copy "H:\DEV\2018\UnitySubntest\SubnauticaModdingTest\Assets\AssetBundles\subnauticaminimap" "H:\SteamLibrary\steamapps\common\Subnautica\QMods\MiniMap"
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
