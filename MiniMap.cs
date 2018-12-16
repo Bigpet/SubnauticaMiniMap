@@ -75,56 +75,56 @@ namespace SubnauticaMiniMap
 
         private void CheckHotkeys()
         {
-            if (Input.GetKeyDown("g"))
-            {
-                if (instMinimap)
-                {
-                    var rto5 = instMinimap.GetComponent<RectTransform>();
-                    this.inctest *= 10.0f;
-                    rto5.localPosition += (new Vector3(1.0f, 1.0f, 0.0f) * inctest);
-                }
-            }
-            if (Input.GetKeyDown("h"))
-            {
-                if (instMinimap)
-                {
-                    var rto5 = instMinimap.GetComponent<RectTransform>();
-                    rto5.localPosition -= (new Vector3(1.0f, 0.0f, 0.0f) * inctest);
-                }
-            }
-            if (Input.GetKeyDown("j"))
-            {
-                if (instMinimap)
-                {
-                    var rto5 = instMinimap.GetComponent<RectTransform>();
-                    rto5.localPosition += (new Vector3(1.0f, 0.0f, 0.0f) * inctest);
-                }
-            }
-            if (Input.GetKeyDown("n"))
-            {
-                if (instMinimap)
-                {
-                    var rto5 = instMinimap.GetComponent<RectTransform>();
-                    rto5.localPosition -= (new Vector3(0.0f, 1.0f, 0.0f) * inctest);
-                }
-            }
-            if (Input.GetKeyDown("m"))
-            {
-                if (instMinimap)
-                {
-                    var rto5 = instMinimap.GetComponent<RectTransform>();
-                    rto5.localPosition += (new Vector3(0.0f, 1.0f, 0.0f) * inctest);
-                }
-            }
-            if (Input.GetKeyDown("k"))
-            {
-                if (instMinimap)
-                {
-                    var rto5 = instMinimap.GetComponent<RectTransform>();
-                    this.inctest *= (1 / 10.0f);
-                    rto5.localPosition += (new Vector3(1.0f, 1.0f, 0.0f) * inctest);
-                }
-            }
+            //if (Input.GetKeyDown("g"))
+            //{
+            //    if (instMinimap)
+            //    {
+            //        var rto5 = instMinimap.GetComponent<RectTransform>();
+            //        this.inctest *= 10.0f;
+            //        rto5.localPosition += (new Vector3(1.0f, 1.0f, 0.0f) * inctest);
+            //    }
+            //}
+            //if (Input.GetKeyDown("h"))
+            //{
+            //    if (instMinimap)
+            //    {
+            //        var rto5 = instMinimap.GetComponent<RectTransform>();
+            //        rto5.localPosition -= (new Vector3(1.0f, 0.0f, 0.0f) * inctest);
+            //    }
+            //}
+            //if (Input.GetKeyDown("j"))
+            //{
+            //    if (instMinimap)
+            //    {
+            //        var rto5 = instMinimap.GetComponent<RectTransform>();
+            //        rto5.localPosition += (new Vector3(1.0f, 0.0f, 0.0f) * inctest);
+            //    }
+            //}
+            //if (Input.GetKeyDown("n"))
+            //{
+            //    if (instMinimap)
+            //    {
+            //        var rto5 = instMinimap.GetComponent<RectTransform>();
+            //        rto5.localPosition -= (new Vector3(0.0f, 1.0f, 0.0f) * inctest);
+            //    }
+            //}
+            //if (Input.GetKeyDown("m"))
+            //{
+            //    if (instMinimap)
+            //    {
+            //        var rto5 = instMinimap.GetComponent<RectTransform>();
+            //        rto5.localPosition += (new Vector3(0.0f, 1.0f, 0.0f) * inctest);
+            //    }
+            //}
+            //if (Input.GetKeyDown("k"))
+            //{
+            //    if (instMinimap)
+            //    {
+            //        var rto5 = instMinimap.GetComponent<RectTransform>();
+            //        this.inctest *= (1 / 10.0f);
+            //        rto5.localPosition += (new Vector3(1.0f, 1.0f, 0.0f) * inctest);
+            //    }
+            //}
             if (Input.GetKeyDown("u"))
             {
                 if (instMinimap)
@@ -147,26 +147,26 @@ namespace SubnauticaMiniMap
             {
                 this.rotateMap = !this.rotateMap;
             }
-            if (Input.GetKeyDown("c"))
-            {
-                this.flipX = !this.flipX;
-            }
-            if (Input.GetKeyDown("v"))
-            {
-                this.flipY = !this.flipY;
-            }
-            if (Input.GetKeyDown("x"))
-            {
-                this.flipS = !this.flipS;
-            }
-            if (Input.GetKeyDown("y"))
-            {
-                this.flipT = !this.flipT;
-            }
-            if (Input.GetKeyDown("p"))
-            {
-                this.flipR = !this.flipR;
-            }
+            //if (Input.GetKeyDown("c"))
+            //{
+            //    this.flipX = !this.flipX;
+            //}
+            //if (Input.GetKeyDown("v"))
+            //{
+            //    this.flipY = !this.flipY;
+            //}
+            //if (Input.GetKeyDown("x"))
+            //{
+            //    this.flipS = !this.flipS;
+            //}
+            //if (Input.GetKeyDown("y"))
+            //{
+            //    this.flipT = !this.flipT;
+            //}
+            //if (Input.GetKeyDown("p"))
+            //{
+            //    this.flipR = !this.flipR;
+            //}
         }
 
         /* To keep debug messages from spamming the log this function prints every unique string only once.
