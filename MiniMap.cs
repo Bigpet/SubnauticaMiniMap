@@ -12,16 +12,16 @@ namespace SubnauticaMiniMap
     {
         public static void Load()
         {
-            MainPatcher.sw.WriteLine("MiniMap Load");
-            MainPatcher.sw.Flush();
+            MainPatcher.dbg_log.WriteLine("MiniMap Load");
+            MainPatcher.dbg_log.Flush();
             var inst = new GameObject("SubnauticaMiniMap.MiniMap").AddComponent<MiniMap>();
             printOnce("MiniMap instantiated");
             try
             {
                 objs.Add(inst.gameObject);
-                printOnce("MiniMap inst added");
+                printOnce("MiniMap instance added");
                 GameObject obj = new GameObject("SubnauticaMiniMap.Overlay");
-                obj.AddComponent<UIOverlay>().color = new Color(1.0f, 0.0f, 0.0f);
+                //obj.AddComponent<UIOverlay>().color = new Color(1.0f, 0.0f, 0.0f);
                 printOnce("Overlay instantiated");
                 objs.Add(obj);
                 inst.overlay = obj;
@@ -47,8 +47,8 @@ namespace SubnauticaMiniMap
 
         private void Awake()
         {
-            MainPatcher.sw.WriteLine("MiniMap Awake");
-            MainPatcher.sw.Flush();
+            MainPatcher.dbg_log.WriteLine("MiniMap Awake");
+            MainPatcher.dbg_log.Flush();
             MiniMap.Instance = this;
         }
 
@@ -388,8 +388,8 @@ namespace SubnauticaMiniMap
             bool is_new = printed.Add(message);
             if (is_new)
             {
-                MainPatcher.sw.WriteLine(message);
-                MainPatcher.sw.Flush();
+                MainPatcher.dbg_log.WriteLine(message);
+                MainPatcher.dbg_log.Flush();
             }
         }
 
@@ -399,6 +399,7 @@ namespace SubnauticaMiniMap
         private bool asset_loaded = false;
         private Graphic g;
 
+        //A list of the objects that were created to be used later to potentially clean them up again (inspired by the Map mod)
         private static List<UnityEngine.Object> objs = new List<UnityEngine.Object>();
         public GameObject overlay;
 

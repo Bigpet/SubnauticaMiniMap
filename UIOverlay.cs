@@ -14,8 +14,8 @@ namespace SubnauticaMiniMap
             if(!logged)
             {
                 logged = true;
-                MainPatcher.sw.WriteLine("OnPopulateMesh");
-                MainPatcher.sw.Flush();
+                MainPatcher.dbg_log.WriteLine("OnPopulateMesh");
+                MainPatcher.dbg_log.Flush();
             }
             Vector2 corner1 = Vector2.zero;
             Vector2 corner2 = Vector2.zero;

@@ -8,6 +8,7 @@ using System.Text;
 namespace SubnauticaMiniMap
 {
     //mostly copied from https://github.com/SMLHelper/SMLHelper/blob/2.x/SMLHelper/Patchers/OptionsPanelPatcher.cs
+    //to avoid either a) adding an external depedency  b) conflicting with versions other mods use
     class OptionsPatcher
     {
         internal static List<ModOptions> modOptions = new List<ModOptions>();

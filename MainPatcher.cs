@@ -12,48 +12,50 @@ namespace SubnauticaMiniMap
 {
     class MainPatcher
     {
+        /**
+         * This function is the main entry point for QModManager.
+         * It uses Harmony to make the main game call into the mods code.
+         */
         public static void Patch()
         {
             var harmony = HarmonyInstance.Create("de.petertissen.subnautica.minimap.mod");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             SceneManager.sceneLoaded += MainPatcher.OnSceneLoaded;
-            f = System.IO.File.Open(string.Format("{0}\\QMods\\MiniMap\\modtest.txt", Environment.CurrentDirectory), FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-            //f = System.IO.File.Open(@"H:\SteamLibrary\steamapps\common\Subnautica\QMods\SubnauticaMap\Bars_dmp\modtest.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-            sw = new StreamWriter(f);
-            sw.WriteLine("ModStart");
-            //Debug.Log("MiniMapMod patcher start");
-            sw.WriteLine("ModOptions");
+
+            dbg_log_file = System.IO.File.Open(string.Format("{0}\\QMods\\MiniMap\\modtest.txt", Environment.CurrentDirectory), FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            //dbg_log_file = System.IO.File.Open(@"H:\SteamLibrary\steamapps\common\Subnautica\QMods\SubnauticaMap\Bars_dmp\modtest.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            dbg_log = new StreamWriter(dbg_log_file);
+            dbg_log.WriteLine("ModStart");
+            AddOptions(harmony);
+            dbg_log.Flush();
+        }
+
+        /**
+         * Add options in the "Mod" Tab, based on the SMLHelper
+         */
+        private static void AddOptions(HarmonyInstance harmony)
+        {
             try
             {
                 var options = new ModOptions();
-                sw.WriteLine("ModOptions2");
+                dbg_log.WriteLine("ModOptions");
                 options.Name = "Mini Map Options";
                 var slider = new ModSliderOption("sldtest", "Slider Option", 20, 100, 50);
-                sw.WriteLine("ModOptions3");
                 var checkbox = new ModToggleOption("tgltest", "Toggle Opt", false);
-                sw.WriteLine("ModOptions4");
                 var choice = new ModChoiceOption("choicetest", "Choice", new[] { "a option", "b option" }, 0);
-                sw.WriteLine("ModOptions5");
 
                 options.Options.Add(slider);
-                sw.WriteLine("ModOptions6");
 
                 options.Options.Add(checkbox);
-                sw.WriteLine("ModOptions7");
                 options.Options.Add(choice);
-                sw.WriteLine("ModOptions8");
                 OptionsPatcher.modOptions.Add(options);
-                sw.WriteLine("ModOptions9");
                 OptionsPatcher.Patch(harmony);
-                sw.WriteLine("ModOptions10");
-
             }
             catch (Exception e)
             {
-                sw.WriteLine(e.StackTrace);
+                dbg_log.WriteLine(e.StackTrace);
             }
-            sw.WriteLine("OptionsPatched");
-            sw.Flush();
+            dbg_log.WriteLine("OptionsPatched");
         }
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -64,7 +66,7 @@ namespace SubnauticaMiniMap
             }
         }
 
-        public static FileStream f;
-        public static StreamWriter sw;
+        public static FileStream dbg_log_file;
+        public static StreamWriter dbg_log;
     }
 }
