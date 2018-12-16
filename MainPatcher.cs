@@ -25,9 +25,17 @@ namespace SubnauticaMiniMap
             dbg_log_file = System.IO.File.Open(string.Format("{0}\\QMods\\MiniMap\\modtest.txt", Environment.CurrentDirectory), FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
             //dbg_log_file = System.IO.File.Open(@"H:\SteamLibrary\steamapps\common\Subnautica\QMods\SubnauticaMap\Bars_dmp\modtest.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
             dbg_log = new StreamWriter(dbg_log_file);
-            dbg_log.WriteLine("ModStart");
+            writeDebugLine("MiniMap ModStart");
             AddOptions(harmony);
-            dbg_log.Flush();
+        }
+
+        public static void writeDebugLine(string input)
+        {
+            if(dbg_log != null)
+            {
+                dbg_log.WriteLine(input);
+                dbg_log.Flush();
+            }
         }
 
         /**
@@ -38,7 +46,7 @@ namespace SubnauticaMiniMap
             try
             {
                 var options = new ModOptions();
-                dbg_log.WriteLine("ModOptions");
+                writeDebugLine("Adding ModOptions");
                 options.Name = "Mini Map Options";
                 var slider = new ModSliderOption("sldtest", "Slider Option", 20, 100, 50);
                 var checkbox = new ModToggleOption("tgltest", "Toggle Opt", false);
@@ -53,9 +61,10 @@ namespace SubnauticaMiniMap
             }
             catch (Exception e)
             {
-                dbg_log.WriteLine(e.StackTrace);
+                writeDebugLine("exception during Adding ModOpting");
+                writeDebugLine(e.StackTrace);
             }
-            dbg_log.WriteLine("OptionsPatched");
+            writeDebugLine("OptionsPatched");
         }
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -66,7 +75,7 @@ namespace SubnauticaMiniMap
             }
         }
 
-        public static FileStream dbg_log_file;
-        public static StreamWriter dbg_log;
+        private static FileStream dbg_log_file = null;
+        private static StreamWriter dbg_log = null;
     }
 }
