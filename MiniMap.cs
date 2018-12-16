@@ -180,6 +180,57 @@ namespace SubnauticaMiniMap
             }
         }
 
+        private void PositionTest(uGUI mainGUI, Transform canvTrans)
+        {
+            GameObject obj2 = new GameObject("SubnauticaMiniMap.Overlay2");
+            var img2 = obj2.AddComponent<RawImage>();
+            img2.color = new Color(1.0f, 1.0f, 0.0f);
+            objs.Add(obj2);
+            var rto2 = obj2.GetComponent<RectTransform>();
+            if (rto2 != null)
+            {
+                printOnce("c9");
+            }
+            rto2.localScale = new Vector3(2.0f, 0.5f, 1.0f);
+            var mcanv = mainGUI.screenCanvas;
+            if (mcanv != null)
+            {
+                var mcanv2 = mcanv.GetComponent<Transform>();
+                if (mcanv2 != null)
+                {
+                    rto2.SetParent(mcanv2);
+                }
+            }
+
+            GameObject obj3 = new GameObject("SubnauticaMiniMap.Overlay3");
+            var img3 = obj3.AddComponent<RawImage>();
+            img3.color = new Color(0.0f, 1.0f, 0.0f);
+            objs.Add(obj3);
+            var rto3 = obj3.GetComponent<RectTransform>();
+            //var to2 = obj2.GetComponent<Transform>();
+            if (rto3 != null)
+            {
+                printOnce("c10");
+            }
+            //var to3 = obj3.GetComponent<Transform>();
+            rto3.SetParent(canvTrans);
+            rto3.position += new Vector3(0, 0, 0.1f);
+            rto3.localScale = new Vector3(0.001f, 0.001f, 1.0f);
+
+
+            GameObject obj4 = new GameObject("SubnauticaMiniMap.Overlay4");
+            var img4 = obj4.AddComponent<UnityEngine.UI.RawImage>();
+            img4.color = new Color(0.0f, 1.0f, 1.0f);
+            objs.Add(obj4);
+            var rto4 = obj4.GetComponent<RectTransform>();
+            rto4.SetParent(canvTrans);
+            rto4.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            rto4.position = new Vector3(1.0f, 0.0f, 0.0f);
+            //rto4.anchorMax = new Vector2(Screen.width / 4, Screen.height / 4);
+            //rto4.anchorMin = new Vector2(0, 0);
+            rto4.position += new Vector3(0, 0, 0.1f);
+        }
+
         private void InitializeMiniMap()
         {
             var mainGUI = uGUI.main;
@@ -209,46 +260,9 @@ namespace SubnauticaMiniMap
                     var canvTrans = canv.GetComponent<Transform>();
                     if (canvTrans == null) return;
                     printOnce("canv transform got");
-
-
-                    GameObject obj2 = new GameObject("SubnauticaMiniMap.Overlay2");
-                    GameObject obj3 = new GameObject("SubnauticaMiniMap.Overlay3");
-                    var img2 = obj2.AddComponent<RawImage>();
-                    var img3 = obj3.AddComponent<RawImage>();
-                    img2.color = new Color(1.0f, 1.0f, 0.0f);
-                    img3.color = new Color(0.0f, 1.0f, 0.0f);
-                    objs.Add(obj2);
-                    objs.Add(obj3);
-                    var rto2 = obj2.GetComponent<RectTransform>();
-                    var rto3 = obj3.GetComponent<RectTransform>();
-                    if (rto2 != null)
-                    {
-                        printOnce("c9");
-                    }
-                    //var to2 = obj2.GetComponent<Transform>();
-                    if (rto3 != null)
-                    {
-                        printOnce("c10");
-                    }
-                    //var to3 = obj3.GetComponent<Transform>();
-                    rto2.localScale = new Vector3(2.0f, 0.5f, 1.0f);
-                    var mcanv = mainGUI.screenCanvas;
-                    if (mcanv != null)
-                    {
-                        var mcanv2 = mcanv.GetComponent<Transform>();
-                        if (mcanv2 != null)
-                        {
-                            rto2.SetParent(mcanv2);
-                        }
-                    }
-                    rto3.SetParent(canvTrans);
-                    rto3.position += new Vector3(0, 0, 0.1f);
-                    rto3.localScale = new Vector3(0.001f, 0.001f, 1.0f);
-                    GameObject obj4 = new GameObject("SubnauticaMiniMap.Overlay4");
-                    var img4 = obj4.AddComponent<UnityEngine.UI.RawImage>();
-                    img4.color = new Color(0.0f, 1.0f, 1.0f);
-                    objs.Add(obj4);
-                    var rto4 = obj4.GetComponent<RectTransform>();
+                    transf.SetParent(canvTrans);
+                    initialized = true;
+                    printOnce("initialized minimap");
                     if (instMinimap)
                     {
                         printOnce("inst2 minimap loaded");
@@ -257,16 +271,8 @@ namespace SubnauticaMiniMap
                         rto5.localScale *= .0001f;
                         rto5.position += new Vector3(0.05f, -0.035f, 0.1f);
                     }
-                    rto4.SetParent(canvTrans);
-                    rto4.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                    rto4.position = new Vector3(1.0f, 0.0f, 0.0f);
-                    //rto4.anchorMax = new Vector2(Screen.width / 4, Screen.height / 4);
-                    //rto4.anchorMin = new Vector2(0, 0);
-                    rto4.position += new Vector3(0, 0, 0.1f);
 
-                    transf.SetParent(canvTrans);
-                    initialized = true;
-                    printOnce("initialized minimap");
+                    //PositionTest(mainGUI, canvTrans);
                 }
                 catch (Exception e)
                 {
