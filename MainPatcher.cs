@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine;
@@ -18,7 +18,7 @@ namespace SubnauticaMiniMap
          */
         public static void Patch()
         {
-            var harmony = HarmonyInstance.Create("de.petertissen.subnautica.minimap.mod");
+            var harmony = new Harmony("de.petertissen.subnautica.minimap.mod");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             SceneManager.sceneLoaded += MainPatcher.OnSceneLoaded;
 
@@ -41,7 +41,7 @@ namespace SubnauticaMiniMap
         /**
          * Add options in the "Mod" Tab, based on the SMLHelper
          */
-        private static void AddOptions(HarmonyInstance harmony)
+        private static void AddOptions(Harmony harmony)
         {
             try
             {

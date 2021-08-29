@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace SubnauticaMiniMap
     {
         internal static List<ModOptions> modOptions = new List<ModOptions>();
 
-        internal static void Patch(HarmonyInstance harmony)
+        internal static void Patch(Harmony harmony)
         {
             var uGUI_OptionsPanelType = typeof(uGUI_OptionsPanel);
             var thisType = typeof(OptionsPatcher);
